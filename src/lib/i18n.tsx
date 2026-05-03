@@ -15,8 +15,8 @@ export const t: Dict = {
 
   // Hero
   hero_badge: { fr: "Disponibles 24h/24 • 7j/7 partout en Algérie", ar: "متوفرون 24/24 • 7/7 في كامل الجزائر" },
-  hero_title_1: { fr: "Ambulance Privée", ar: "سيارة إسعاف خاصة" },
-  hero_title_2: { fr: "Rapide & Humaine", ar: "سريعة وإنسانية" },
+  hero_title_1: { fr: "Ambulance Privée en Algérie", ar: "سيارة إسعاف خاصة في الجزائر" },
+  hero_title_2: { fr: "Service Médical 24h/24", ar: "خدمة طبية 24/24" },
   hero_desc: {
     fr: "Transport médicalisé, médecin à domicile et transport funéraire — une équipe qualifiée à vos côtés à chaque instant, avec respect et discrétion.",
     ar: "نقل طبي، طبيب في المنزل ونقل الجنازات — فريق مؤهل إلى جانبكم في كل لحظة، باحترام وتقدير.",
@@ -31,8 +31,8 @@ export const t: Dict = {
 
   // Services
   services_kicker: { fr: "Nos services", ar: "خدماتنا" },
-  services_title: { fr: "Une réponse adaptée à chaque besoin", ar: "حلول مناسبة لكل احتياج" },
-  services_sub: { fr: "De l'urgence au quotidien, nous sommes l'allié médical de votre famille partout en Algérie.", ar: "من الحالات الطارئة إلى الحياة اليومية، نحن الشريك الطبي لعائلتك في كامل الجزائر." },
+  services_title: { fr: "Ambulance Privée & Transport Médicalisé", ar: "إسعاف خاص ونقل طبي" },
+  services_sub: { fr: "De l'urgence au transport médicalisé quotidien, nous sommes votre allié santé partout en Algérie (48 wilayas).", ar: "من الحالات الطارئة إلى النقل الطبي اليومي، نحن شريككم الصحي في كامل الجزائر (48 ولاية)." },
   svc_transport_t: { fr: "Transport médicalisé", ar: "النقل الطبي" },
   svc_transport_d: { fr: "Transfert sécurisé entre hôpitaux, cliniques et domicile avec équipement médical complet et personnel formé.", ar: "نقل آمن بين المستشفيات والعيادات والمنازل بمعدات طبية كاملة وطاقم مدرب." },
   svc_doctor_t: { fr: "Médecin à domicile", ar: "طبيب في المنزل" },

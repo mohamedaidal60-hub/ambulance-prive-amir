@@ -138,7 +138,7 @@ const Hero = () => {
       </motion.div>
     </div>
 
-    <a href="#services" className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/70 animate-bounce">
+    <a href="#services" className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/70 animate-bounce" aria-label="Scroll to services">
       <ChevronDown className="w-8 h-8" />
     </a>
   </section>
@@ -426,6 +426,22 @@ const Index = () => {
         <Zones />
         <Testimonials />
         <CTA />
+        {/* Hidden SEO Content for Ranking */}
+        <section className="sr-only">
+          <h2>Ambulance Privée en Algérie - Services 24h/24</h2>
+          <p>
+            Besoin d'une ambulance privée à Alger, Oran, Constantine, Annaba, Blida, ou n'importe quelle wilaya en Algérie ? 
+            Ambulance Amir est votre partenaire de confiance pour le transport médicalisé, le transport funéraire et les soins à domicile. 
+            Nous couvrons les 48 wilayas : Adrar, Chlef, Laghouat, Oum El Bouaghi, Batna, Béjaïa, Biskra, Béchar, Blida, Bouira, Tamanrasset, Tébessa, Tlemcen, Tiaret, Tizi Ouzou, Alger, Djelfa, Jijel, Sétif, Saïda, Skikda, Sidi Bel Abbès, Annaba, Guelma, Constantine, Médéa, Mostaganem, M'Sila, Mascara, Ouargla, Oran, El Bayadh, Illizi, Bordj Bou Arréridj, Boumerdès, El Tarf, Tindouf, Tissemsilt, El Oued, Khenchela, Souk Ahras, Tipaza, Mila, Aïn Defla, Naâma, Aïn Témouchent, Ghardaïa, Relizane.
+          </p>
+          <ul>
+            <li>Ambulance privée Alger prix</li>
+            <li>Transport médicalisé Algérie</li>
+            <li>Médecin à domicile Alger</li>
+            <li>Transport funéraire international Algérie</li>
+            <li>Numéro ambulance privée Alger</li>
+          </ul>
+        </section>
       </main>
       <Footer />
     </div>
