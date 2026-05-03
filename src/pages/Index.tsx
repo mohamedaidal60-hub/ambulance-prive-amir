@@ -401,6 +401,43 @@ const Testimonials = () => {
   );
 };
 
+const FAQ = () => {
+  const { tr, lang } = useLang();
+  const faqs = [
+    { 
+      q: { fr: "Comment appeler une ambulance privée en Algérie ?", ar: "كيف يمكنني طلب سيارة إسعاف خاصة في الجزائر؟" },
+      a: { fr: "Vous pouvez nous appeler 24h/24 au 0550 83 83 80. Nous intervenons immédiatement partout en Algérie.", ar: "يمكنكم الاتصال بنا على مدار الساعة على الرقم 0550 83 83 80. نتدخل فوراً في جميع أنحاء الجزائر." }
+    },
+    { 
+      q: { fr: "Quels sont les tarifs d'une ambulance privée à Alger ?", ar: "ما هي أسعار سيارات الإسعاف الخاصة في الجزائر؟" },
+      a: { fr: "Les tarifs dépendent de la distance et du type de soin requis. Contactez-nous pour un devis instantané et transparent.", ar: "تعتمد الأسعار على المسافة ونوع الرعاية المطلوبة. اتصلوا بنا للحصول على تقدير فوري وشفاف." }
+    },
+    { 
+      q: { fr: "Proposez-vous le transport funéraire inter-wilayas ?", ar: "هل توفرون خدمة نقل الجنائز بين الولايات؟" },
+      a: { fr: "Oui, Ambulance Amir assure le transport funéraire avec respect et dignité vers les 48 wilayas d'Algérie.", ar: "نعم، توفر إسعاف أمير نقل الجنائز بكل احترام وتقدير نحو 48 ولاية في الجزائر." }
+    }
+  ];
+
+  return (
+    <section className="py-20 bg-muted/30">
+      <div className="container mx-auto px-4 max-w-4xl">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-5xl font-black text-secondary mb-4">Questions Fréquentes</h2>
+          <p className="text-muted-foreground">Tout ce qu'il faut savoir sur nos services d'ambulance en Algérie.</p>
+        </div>
+        <div className="grid gap-4">
+          {faqs.map((f, i) => (
+            <div key={i} className="bg-white rounded-2xl p-6 shadow-sm border border-border/50">
+              <h3 className="font-bold text-lg mb-2 text-primary">{f.q[lang as keyof typeof f.q]}</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">{f.a[lang as keyof typeof f.a]}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const CTA = () => {
   const { tr } = useLang();
   const { openWhatsApp } = useWhatsApp();
@@ -478,6 +515,7 @@ const Index = () => {
         <Stats />
         <About />
         <Zones />
+        <FAQ />
         <Testimonials />
         <CTA />
         {/* Hidden SEO Content for Ranking */}
