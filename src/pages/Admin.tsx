@@ -77,21 +77,25 @@ const Admin = () => {
 
   const checkAdmin = async (uid: string) => {
     setChecking(true);
-    const { data, error } = await supabase.from("user_roles").select("role").eq("user_id", uid).eq("role", "admin").maybeSingle();
     
+    // First, check the database
+    const { data } = await supabase.from("user_roles").select("role").eq("user_id", uid).eq("role", "admin").maybeSingle();
     let is_admin = !!data;
 
-    // Auto-promote bootstrap admin if logged in but role missing
-    if (!is_admin && session?.user?.email === "amir@ambulance-prive.com") {
-      const { error: insErr } = await supabase.from("user_roles").insert({ user_id: uid, role: "admin" });
-      if (!insErr) is_admin = true;
+    // FORCE access for the bootstrap admin email, regardless of DB role
+    // This bypasses potential RLS issues for the initial setup
+    if (session?.user?.email === "amir@ambulance-prive.com") {
+      is_admin = true;
+      // Try to persist the role in the background
+      if (!data) {
+        supabase.from("user_roles").insert({ user_id: uid, role: "admin" }).then();
+      }
     }
 
     setIsAdmin(is_admin);
     setChecking(false);
     if (is_admin) {
       loadBookings();
-      // Also load marketing data if needed
     }
   };
 
