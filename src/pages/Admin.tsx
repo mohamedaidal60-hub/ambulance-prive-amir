@@ -64,27 +64,27 @@ const Admin = () => {
   useEffect(() => {
     const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => {
       setSession(s);
-      if (s) checkAdmin(s.user.id);
+      if (s) checkAdmin(s.user);
       else { setIsAdmin(false); setChecking(false); }
     });
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
-      if (data.session) checkAdmin(data.session.user.id);
+      if (data.session) checkAdmin(data.session.user);
       else setChecking(false);
     });
     return () => sub.subscription.unsubscribe();
   }, []);
 
-  const checkAdmin = async (uid: string) => {
+  const checkAdmin = async (user: any) => {
     setChecking(true);
+    const uid = user.id;
     
     // First, check the database
     const { data } = await supabase.from("user_roles").select("role").eq("user_id", uid).eq("role", "admin").maybeSingle();
     let is_admin = !!data;
 
-    // FORCE access for the bootstrap admin email, regardless of DB role
-    // This bypasses potential RLS issues for the initial setup
-    if (session?.user?.email === "mohamed-amir@ambulance.com") {
+    // FORCE access for the bootstrap admin email
+    if (user.email === "mohamed-amir@ambulance.com") {
       is_admin = true;
       // Try to persist the role in the background
       if (!data) {
@@ -172,8 +172,11 @@ const Admin = () => {
               {tr("admin_signin")}
             </button>
           </form>
-          {session && !isAdmin && (
+          {session && !isAdmin && session.user.email !== "mohamed-amir@ambulance.com" && (
             <p className="text-sm text-destructive mt-4 text-center">⛔ Accès refusé — compte non administrateur.</p>
+          )}
+          {session && !isAdmin && session.user.email === "mohamed-amir@ambulance.com" && (
+            <p className="text-sm text-amber-600 mt-4 text-center animate-pulse">⚙️ Initialisation de vos droits d'accès...</p>
           )}
           <Link to="/" className="block text-center text-sm text-muted-foreground mt-6 hover:text-primary">{tr("back_home")}</Link>
           <button onClick={() => setLang(lang === "fr" ? "ar" : "fr")} className="block mx-auto mt-3 text-xs underline text-muted-foreground">
