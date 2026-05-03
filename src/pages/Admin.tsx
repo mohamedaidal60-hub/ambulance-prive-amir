@@ -84,7 +84,7 @@ const Admin = () => {
 
     // FORCE access for the bootstrap admin email, regardless of DB role
     // This bypasses potential RLS issues for the initial setup
-    if (session?.user?.email === "amir@ambulance-prive.com") {
+    if (session?.user?.email === "mohamed-amir@ambulance.com") {
       is_admin = true;
       // Try to persist the role in the background
       if (!data) {
@@ -113,7 +113,7 @@ const Admin = () => {
     let { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error && error.message.toLowerCase().includes("invalid")) {
       // Bootstrap admin: try to create the account on first login
-      if (email === "amir@ambulance-prive.com") {
+      if (email === "mohamed-amir@ambulance.com") {
         const { error: signUpErr } = await supabase.auth.signUp({
           email, password,
           options: { emailRedirectTo: window.location.origin + "/admin" },
