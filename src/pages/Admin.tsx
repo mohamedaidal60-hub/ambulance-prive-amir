@@ -77,10 +77,22 @@ const Admin = () => {
 
   const checkAdmin = async (uid: string) => {
     setChecking(true);
-    const { data } = await supabase.from("user_roles").select("role").eq("user_id", uid).eq("role", "admin").maybeSingle();
-    setIsAdmin(!!data);
+    const { data, error } = await supabase.from("user_roles").select("role").eq("user_id", uid).eq("role", "admin").maybeSingle();
+    
+    let is_admin = !!data;
+
+    // Auto-promote bootstrap admin if logged in but role missing
+    if (!is_admin && session?.user?.email === "amir@ambulance-prive.com") {
+      const { error: insErr } = await supabase.from("user_roles").insert({ user_id: uid, role: "admin" });
+      if (!insErr) is_admin = true;
+    }
+
+    setIsAdmin(is_admin);
     setChecking(false);
-    if (data) loadBookings();
+    if (is_admin) {
+      loadBookings();
+      // Also load marketing data if needed
+    }
   };
 
   const loadBookings = async () => {
