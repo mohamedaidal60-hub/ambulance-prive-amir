@@ -328,9 +328,13 @@ const Admin = () => {
                   <h2 className="font-bold text-xl flex items-center gap-2">
                     <Target className="w-5 h-5 text-primary" /> Campagnes Google Ads
                   </h2>
-                  <button className="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-full text-sm font-bold">
-                    <Plus className="w-4 h-4" /> Nouvelle Campagne
-                  </button>
+                  <a 
+                    href="https://ads.google.com/nav/select" 
+                    target="_blank" 
+                    className="inline-flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-full text-sm font-bold shadow-glow hover:scale-105 transition-transform"
+                  >
+                    <Plus className="w-4 h-4" /> Lancer un Sponsoring
+                  </a>
                 </div>
 
                 <div className="grid gap-4">
@@ -367,9 +371,25 @@ const Admin = () => {
               </section>
 
               <aside className="space-y-6">
-                <section className="bg-card border rounded-2xl p-5">
+                <section className="bg-card border rounded-2xl p-5 shadow-sm">
+                  <h3 className="font-bold mb-4 flex items-center gap-2 text-primary">
+                    <DollarSign className="w-4 h-4" /> Paiement & Facturation
+                  </h3>
+                  <p className="text-xs text-muted-foreground mb-4">
+                    Pour lancer vos publicités, vous devez enregistrer votre carte Visa directement sur la console Google.
+                  </p>
+                  <a 
+                    href="https://ads.google.com/aw/billing/summary" 
+                    target="_blank" 
+                    className="flex items-center justify-center gap-2 w-full p-3 rounded-xl bg-accent text-white hover:bg-accent/90 transition-colors text-sm font-bold"
+                  >
+                    Configurer ma Carte Visa <ExternalLink className="w-4 h-4" />
+                  </a>
+                </section>
+
+                <section className="bg-card border rounded-2xl p-5 shadow-sm">
                   <h3 className="font-bold mb-4 flex items-center gap-2">
-                    <Globe className="w-4 h-4 text-primary" /> SEO & Liens
+                    <Globe className="w-4 h-4 text-primary" /> SEO & Régies
                   </h3>
                   <div className="space-y-3">
                     <a 
@@ -377,34 +397,17 @@ const Admin = () => {
                       target="_blank" 
                       className="flex items-center justify-between p-3 rounded-xl bg-muted/50 hover:bg-muted transition-colors text-sm font-medium"
                     >
-                      Google Ads Console <ExternalLink className="w-3 h-3" />
+                      Accès Google Ads <ExternalLink className="w-3 h-3" />
                     </a>
                     <a 
                       href="https://search.google.com/search-console" 
                       target="_blank" 
                       className="flex items-center justify-between p-3 rounded-xl bg-muted/50 hover:bg-muted transition-colors text-sm font-medium"
                     >
-                      Search Console <ExternalLink className="w-3 h-3" />
-                    </a>
-                    <a 
-                      href="/sitemap.xml" 
-                      target="_blank" 
-                      className="flex items-center justify-between p-3 rounded-xl bg-muted/50 hover:bg-muted transition-colors text-sm font-medium"
-                    >
-                      Plan du site (XML) <ExternalLink className="w-3 h-3" />
+                      Google Search Console <ExternalLink className="w-3 h-3" />
                     </a>
                   </div>
                 </section>
-
-                <div className="bg-gradient-primary rounded-2xl p-5 text-white shadow-glow">
-                  <h4 className="font-bold mb-2">Besoin d'aide ?</h4>
-                  <p className="text-xs text-white/80 mb-4">
-                    Pour configurer des campagnes Google Ads réelles avec suivi de conversion, contactez le support technique.
-                  </p>
-                  <button className="w-full py-2 bg-white text-primary rounded-xl text-sm font-bold shadow-sm">
-                    Support Technique
-                  </button>
-                </div>
               </aside>
             </div>
           </TabsContent>
