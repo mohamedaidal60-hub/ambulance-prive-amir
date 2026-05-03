@@ -1,8 +1,15 @@
 import { useCallback } from "react";
+import { useLang } from "@/lib/i18n";
 
 export const useWhatsApp = () => {
+  const { lang } = useLang();
+
   const openWhatsApp = useCallback((customMessage?: string) => {
-    const message = customMessage || "Bonjour, j'ai besoin d'une ambulance.";
+    const defaultMessage = lang === "ar" 
+      ? "مرحباً، أحتاج إلى سيارة إسعاف." 
+      : "Bonjour, j'ai besoin d'une ambulance.";
+    
+    const message = customMessage || defaultMessage;
     const currentUrl = window.location.href;
     
     const sendWA = (msg: string) => {
@@ -22,13 +29,14 @@ export const useWhatsApp = () => {
           console.error("Error getting location:", error);
           const fullMessage = `${message}\n\nPage: ${currentUrl}`;
           sendWA(fullMessage);
-        }
+        },
+        { enableHighAccuracy: true, timeout: 5000 }
       );
     } else {
       const fullMessage = `${message}\n\nPage: ${currentUrl}`;
       sendWA(fullMessage);
     }
-  }, []);
+  }, [lang]);
 
   return { openWhatsApp };
 };
