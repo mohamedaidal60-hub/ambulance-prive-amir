@@ -36,40 +36,94 @@ const Counter = ({ to, suffix = "" }: { to: number; suffix?: string }) => {
   return <span>{n.toLocaleString()}{suffix}</span>;
 };
 
+import { Menu, X } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
+
 const Nav = () => {
   const { tr, lang, setLang } = useLang();
+  const [open, setOpen] = useState(false);
+
+  const navLinks = [
+    { href: "#services", label: tr("nav_services") },
+    { href: "#about", label: tr("nav_about") },
+    { href: "#zones", label: tr("nav_zones") },
+    { to: "/reserver", label: tr("nav_book") },
+  ];
+
   return (
     <header className="fixed top-0 inset-x-0 z-50 backdrop-blur-xl bg-background/70 border-b border-border/50">
       <div className="container mx-auto flex items-center justify-between py-3 px-4 gap-3">
         <a href="#" className="flex items-center gap-3">
-          <img src={logo} alt="Logo Ambulance Amir Algérie" className="h-12 w-12 object-contain" width={48} height={48} />
+          <img src={logo} alt="Logo Ambulance Amir Algérie" className="h-10 w-10 sm:h-12 sm:w-12 object-contain" width={48} height={48} />
           <div className="leading-tight">
-            <div className="font-extrabold text-lg text-secondary">Ambulance Amir</div>
-            <div className="text-xs text-muted-foreground">Service 24/7</div>
+            <div className="font-extrabold text-base sm:text-lg text-secondary">Ambulance Amir</div>
+            <div className="text-[10px] sm:text-xs text-muted-foreground">Service 24/7</div>
           </div>
         </a>
+        
         <nav className="hidden lg:flex items-center gap-7 text-sm font-semibold">
-          <a href="#services" className="hover:text-primary transition-colors">{tr("nav_services")}</a>
-          <a href="#about" className="hover:text-primary transition-colors">{tr("nav_about")}</a>
-          <a href="#zones" className="hover:text-primary transition-colors">{tr("nav_zones")}</a>
-          <Link to="/reserver" className="hover:text-primary transition-colors">{tr("nav_book")}</Link>
-          <Link to="/admin" className="hover:text-primary transition-colors">{tr("nav_admin")}</Link>
+          {navLinks.map((link) => (
+            link.href ? (
+              <a key={link.label} href={link.href} className="hover:text-primary transition-colors">{link.label}</a>
+            ) : (
+              <Link key={link.label} to={link.to!} className="hover:text-primary transition-colors">{link.label}</Link>
+            )
+          ))}
         </nav>
+
         <div className="flex items-center gap-2">
           <button onClick={() => setLang(lang === "fr" ? "ar" : "fr")} className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-2 rounded-full border hover:bg-muted">
             <Languages className="w-3.5 h-3.5" />{lang === "fr" ? "العربية" : "FR"}
           </button>
+          
           <a
             href={`tel:+213${PHONE.slice(1)}`}
-            className="relative inline-flex items-center gap-2 bg-gradient-primary text-primary-foreground font-bold px-4 py-2.5 rounded-full shadow-glow hover:scale-105 transition-transform"
+            className="relative inline-flex items-center gap-2 bg-gradient-primary text-primary-foreground font-bold px-3 sm:px-4 py-2 sm:py-2.5 rounded-full shadow-glow hover:scale-105 transition-transform"
           >
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-white opacity-75 animate-ping" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white" />
-            </span>
             <Phone className="w-4 h-4" />
             <span className="hidden sm:inline">{PHONE_DISPLAY}</span>
           </a>
+
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger asChild className="lg:hidden">
+              <button className="p-2 rounded-xl bg-muted" aria-label="Menu">
+                <Menu className="w-6 h-6" />
+              </button>
+            </SheetTrigger>
+            <SheetContent side={lang === "ar" ? "left" : "right"} className="w-[300px] p-0">
+              <SheetTitle className="sr-only">Menu de navigation</SheetTitle>
+              <div className="flex flex-col h-full bg-card p-6">
+                <div className="flex items-center gap-3 mb-8 pb-6 border-b">
+                  <img src={logo} alt="Logo" className="h-10 w-10" />
+                  <div className="font-extrabold text-secondary">Ambulance Amir</div>
+                </div>
+                <nav className="flex flex-col gap-4">
+                  {navLinks.map((link) => (
+                    link.href ? (
+                      <a 
+                        key={link.label} 
+                        href={link.href} 
+                        onClick={() => setOpen(false)}
+                        className="text-lg font-bold hover:text-primary transition-colors py-2 border-b border-border/50"
+                      >
+                        {link.label}
+                      </a>
+                    ) : (
+                      <Link 
+                        key={link.label} 
+                        to={link.to!} 
+                        onClick={() => setOpen(false)}
+                        className="text-lg font-bold hover:text-primary transition-colors py-2 border-b border-border/50"
+                      >
+                        {link.label}
+                      </Link>
+                    )
+                  ))}
+                  <Link to="/admin" onClick={() => setOpen(false)} className="text-sm text-muted-foreground mt-4">Accès Admin</Link>
+                </nav>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </header>
@@ -80,43 +134,43 @@ const Hero = () => {
   const { tr } = useLang();
   const { openWhatsApp } = useWhatsApp();
   return (
-  <section className="relative min-h-screen flex items-center pt-24 overflow-hidden bg-gradient-hero">
+  <section className="relative min-h-[100dvh] flex items-center pt-20 sm:pt-24 overflow-hidden bg-gradient-hero">
     <div className="absolute inset-0">
       <img src={heroImg} alt="Ambulance privée Amir en intervention en Algérie" className="w-full h-full object-cover opacity-30" width={1920} height={1080} fetchPriority="high" />
-      <div className="absolute inset-0 bg-gradient-to-r from-secondary/90 via-secondary/70 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-secondary/95 via-secondary/70 to-transparent" />
     </div>
 
-    <div className="container relative mx-auto px-4 grid md:grid-cols-2 gap-12 items-center py-20">
-      <motion.div initial="hidden" animate="show" variants={fadeUp} className="text-white">
-        <motion.span variants={fadeUp} className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full text-sm font-semibold mb-6">
+    <div className="container relative mx-auto px-4 grid md:grid-cols-2 gap-8 md:gap-12 items-center py-12 md:py-20">
+      <motion.div initial="hidden" animate="show" variants={fadeUp} className="text-white text-center md:text-left">
+        <motion.span variants={fadeUp} className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold mb-6">
           <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
           {tr("hero_badge")}
         </motion.span>
-        <motion.h1 variants={fadeUp} className="text-5xl md:text-7xl font-black leading-[1.05] mb-6">
+        <motion.h1 variants={fadeUp} className="text-4xl sm:text-5xl md:text-7xl font-black leading-[1.1] mb-6">
           {tr("hero_title_1")}
           <span className="block text-gradient bg-gradient-to-r from-primary-glow to-accent bg-clip-text text-transparent">
             {tr("hero_title_2")}
           </span>
         </motion.h1>
-        <motion.p variants={fadeUp} className="text-lg md:text-xl text-white/85 mb-8 max-w-xl">
+        <motion.p variants={fadeUp} className="text-base sm:text-lg md:text-xl text-white/85 mb-8 max-w-xl mx-auto md:mx-0">
           {tr("hero_desc")}
         </motion.p>
-        <motion.div variants={fadeUp} className="flex flex-wrap gap-4">
-          <a href={`tel:+213${PHONE.slice(1)}`} className="group inline-flex items-center gap-3 bg-gradient-primary text-primary-foreground font-bold px-7 py-4 rounded-full shadow-glow hover:shadow-elegant transition-all hover:-translate-y-0.5">
+        <motion.div variants={fadeUp} className="flex flex-col sm:flex-row flex-wrap justify-center md:justify-start gap-4">
+          <a href={`tel:+213${PHONE.slice(1)}`} className="group inline-flex items-center justify-center gap-3 bg-gradient-primary text-primary-foreground font-bold px-7 py-4 rounded-full shadow-glow hover:shadow-elegant transition-all hover:-translate-y-0.5">
             <Phone className="w-5 h-5 group-hover:rotate-12 transition-transform" />
             {tr("cta_emergency")}
           </a>
-          <Link to="/reserver" className="inline-flex items-center gap-3 bg-white text-secondary font-bold px-7 py-4 rounded-full shadow-card hover:scale-105 transition-transform">
+          <Link to="/reserver" className="inline-flex items-center justify-center gap-3 bg-white text-secondary font-bold px-7 py-4 rounded-full shadow-card hover:scale-105 transition-transform">
             <Calendar className="w-5 h-5" />
             {tr("cta_book_now")}
           </Link>
-          <button onClick={() => openWhatsApp()} className="inline-flex items-center gap-3 bg-accent text-accent-foreground font-bold px-7 py-4 rounded-full shadow-card hover:scale-105 transition-transform">
+          <button onClick={() => openWhatsApp()} className="inline-flex items-center justify-center gap-3 bg-accent text-accent-foreground font-bold px-7 py-4 rounded-full shadow-card hover:scale-105 transition-transform">
             <MessageCircle className="w-5 h-5" />
             {tr("cta_whatsapp")}
           </button>
         </motion.div>
 
-        <motion.div variants={fadeUp} className="mt-10 flex flex-wrap gap-6 text-sm text-white/80">
+        <motion.div variants={fadeUp} className="mt-10 flex flex-wrap justify-center md:justify-start gap-6 text-xs sm:text-sm text-white/80">
           <div className="flex items-center gap-2"><Clock className="w-4 h-4 text-accent" /> {tr("feat_fast")}</div>
           <div className="flex items-center gap-2"><Shield className="w-4 h-4 text-accent" /> {tr("feat_certified")}</div>
           <div className="flex items-center gap-2"><Heart className="w-4 h-4 text-accent" /> {tr("feat_human")}</div>
@@ -415,7 +469,7 @@ const Index = () => {
     <Helmet>
       <html lang={lang} dir={lang === "ar" ? "rtl" : "ltr"} />
     </Helmet>
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-x-hidden">
       <Nav />
       <main>
         <Hero />

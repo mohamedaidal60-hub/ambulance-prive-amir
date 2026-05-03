@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { useLang } from "@/lib/i18n";
+import { toast } from "sonner";
 
 export const useWhatsApp = () => {
   const { lang } = useLang();
@@ -14,8 +15,10 @@ export const useWhatsApp = () => {
     
     const sendWA = (msg: string) => {
       const waUrl = `https://wa.me/213550838380?text=${encodeURIComponent(msg)}`;
-      window.open(waUrl, "_blank");
+      window.location.href = waUrl;
     };
+
+    toast.info(lang === "ar" ? "جاري تحديد الموقع..." : "Obtention de la localisation...");
 
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
@@ -30,7 +33,7 @@ export const useWhatsApp = () => {
           const fullMessage = `${message}\n\nPage: ${currentUrl}`;
           sendWA(fullMessage);
         },
-        { enableHighAccuracy: true, timeout: 5000 }
+        { enableHighAccuracy: true, timeout: 4000 }
       );
     } else {
       const fullMessage = `${message}\n\nPage: ${currentUrl}`;
